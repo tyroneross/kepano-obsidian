@@ -1,6 +1,6 @@
 # Atlas-inspired Native Home
 
-An Atlas-inspired home for an existing Obsidian vault. It uses Markdown, the built-in Bases list view and one CSS snippet. No Dataview, JavaScript, external fonts, build step, service or custom indexer.
+An Atlas-inspired home for an existing Obsidian vault. It uses Markdown, the built-in Bases list view and one CSS snippet. The basic home needs no Dataview, JavaScript, external fonts, build step, service or custom indexer. An optional source-owned editor module is described below.
 
 The home opens existing files. It does not replace your folder structure or create a second task system.
 
@@ -19,7 +19,7 @@ The example links are placeholders to customize, not files this add-on creates. 
 
 - `Home.md`: labels, navigation, attribution and folder mappings.
 - `Home.base`: native filters, formulas, ordering and limits. The `this.home_*` properties come from the embedding Home note; opening the Base by itself lacks that context.
-- `atlas-home.css`: page-scoped typography, compact shared outlines and responsive layout. It follows Obsidian's colors and text-size setting. Two columns stack below 800px of actual note width; quick links become a two-column grid in narrow notes. System fonts work offline.
+- `atlas-home.css`: page-scoped typography, compact shared outlines and responsive layout. It uses a RossLabs color-engine palette with separate light and dark roles and follows Obsidian's text-size setting. Two columns stack below 800px of actual note width; quick links become a two-column grid in narrow notes. System fonts work offline.
 
 After changing styles with Home already open, reopen Home so native Bases recalculates its row measurements. Avoid copying Obsidian's workspace or settings from a template repository. This add-on performs no automatic writes; native Bases retains its standard property-editing controls.
 
@@ -34,3 +34,21 @@ Personal note data, real folder mappings, screenshots, settings, credentials and
 - Native adaptation: Tyrone Ross, MIT.
 
 References: [Bases syntax](https://help.obsidian.md/bases/syntax), [List view](https://help.obsidian.md/bases/views/list).
+
+## Optional area reader and editor
+
+`atlas-areas.js` is a small module for an **existing source-owned Obsidian plugin**. It is not a standalone plugin and is not required by the basic home. It adds searchable entry lists, rendered Markdown, a plain-text Markdown editor and explicit Save/Discard controls. No external packages or network requests are added.
+
+For a CommonJS host, copy the module alongside its source and call `require("./atlas-areas").installAtlasAreas(this)` once from the host plugin's `onload`. If that host bundles modules, include it in its existing bundling mechanism. Keep the CSS snippet enabled. Customize the `areas` object, Home path and excluded folders to your vault. Example paths are generic conventions, not a vault export.
+
+After integration, quick links can use `[Task inbox](obsidian://atlas-area?area=inbox)`, with `projects`, `knowledge` or `notes` for the other areas. The ordinary links in the supplied Home remain usable without this extension. Commands named “Atlas: …” are also registered under the host plugin.
+
+The editor preserves frontmatter and changes the selected source file only when Save is clicked. It compares the exact original source inside Obsidian's atomic `Vault.process` callback; a concurrent change blocks the write. Drafts are stored in the app's local device storage, keyed by vault name and file path. They do not sync to another device. If storage fails, an in-memory draft remains and navigation is blocked until Save or Discard; quitting the app can still lose a memory-only draft. Older asynchronous save completions cannot remove or overwrite a newer draft. A newer draft whose source changed requires reconciliation.
+
+This version edits existing entries; it does not automatically create tasks, project records or canonical knowledge pages. Use your existing capture workflows for new records. The entry list shows at most 80 matching results; search narrows it.
+
+Run `node --test test-atlas-areas.js` for the behavioral checks. API basis: [official Obsidian API declarations](https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts), including `ItemView`, `MarkdownRenderer.render`, protocol handlers and `Vault.process`.
+
+### Color provenance
+
+The page palette was generated with the RossLabs/Groundwork relationship engine: anchor hue 250°, analogous accent +35°, base chroma 0.025, accent chroma 0.14, light surface L=0.985 and dark L=0.16. The generated roles are retained in CSS. Native Obsidian controls still inherit some platform styling; palette checks do not establish an overall accessibility pass.
