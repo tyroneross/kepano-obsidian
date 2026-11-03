@@ -1,0 +1,74 @@
+filters:
+  and:
+    - file.ext == "md"
+    - '!file.path.contains(".suggestions")'
+    - '!file.path.contains(".suggested")'
+formulas:
+  page: 'link(file.path, if(title, title, file.name))'
+  changed: 'file.mtime.format("YYYY-MM-DD")'
+properties:
+  formula.page:
+    displayName: Page
+  file.name:
+    displayName: Date
+  formula.changed:
+    displayName: Modified
+  file.folder:
+    displayName: Folder
+  note.status:
+    displayName: Status
+views:
+  - type: table
+    name: Daily pages
+    filters:
+      and:
+        - file.inFolder(this.home_daily_folder)
+        - '/^\d{4}-\d{2}-\d{2}$/.matches(file.name)'
+    order:
+      - file.name
+      - formula.page
+    sort:
+      - property: file.name
+        direction: DESC
+    limit: 3
+  - type: table
+    name: Projects
+    filters:
+      and:
+        - file.inFolder(this.home_projects_folder)
+        - '!file.inFolder(this.home_inactive_folder)'
+        - note.type == this.home_project_type
+        - 'note.status != "superseded"'
+        - 'note.status != "archived"'
+    order:
+      - formula.page
+      - note.status
+    sort:
+      - property: file.mtime
+        direction: DESC
+    limit: 8
+  - type: table
+    name: Recent reference
+    filters:
+      and:
+        - file.inFolder(this.home_notes_folder)
+        - '!file.path.contains("/raw/")'
+        - '!file.path.contains("/outputs/")'
+        - '!file.path.contains("/tmp/")'
+        - '!file.path.contains("/templates/")'
+        - '!file.path.contains("/artifacts/")'
+        - '!file.path.contains("/tools/scripts/")'
+        - '!file.path.contains("/_views/")'
+        - 'file.path != this.file.path'
+        - 'file.name != "README"'
+        - 'file.name != "CLAUDE"'
+        - 'file.name != "AGENTS"'
+        - 'file.name != "_index"'
+        - 'file.name != "_INDEX"'
+    order:
+      - formula.page
+      - formula.changed
+    sort:
+      - property: file.mtime
+        direction: DESC
+    limit: 8

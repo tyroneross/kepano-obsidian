@@ -7,3 +7,11 @@ See the article [How I use Obsidian](https://stephango.com/vault) on my site for
 1. [Download this vault](https://github.com/kepano/kepano-obsidian/archive/refs/heads/main.zip)
 2. Unzip the .zip file to a folder of your choosing
 3. Open Obsidian and create a new vault pointing to that folder
+
+## Native home add-on in this fork
+
+This fork retains Steph Ango's original vault and MIT attribution. The optional
+[Native Home](portable-home/README.md) adds a small dashboard for an **existing**
+vault using core Bases, Markdown and a scoped CSS snippet. No new community
+plugins or folder migration are required. Personal vault data does not belong
+in this public template repository.

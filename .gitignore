@@ -9,3 +9,9 @@
 
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
+
+# Local development records and private installation state
+.build-loop/
+.local/
+private/
+captures/
