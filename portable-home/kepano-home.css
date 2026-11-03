@@ -5,6 +5,7 @@
 
 .markdown-reading-view.kepano-home,
 .markdown-preview-view.kepano-home {
+  --file-line-width: 980px;
   --home-accent: #24837b;
   --home-rule: #d8d3c4;
   --background-primary: #fffcf0;
@@ -45,14 +46,15 @@
   --h2-color: #e6e4d9;
   --table-border-color: #45423d;
 }
-.kepano-home .markdown-preview-sizer {
+.kepano-home .markdown-preview-sizer,
+.markdown-preview-view.kepano-home.is-readable-line-width .markdown-preview-sizer {
   container: home-note / inline-size;
   max-width: 980px;
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 36px);
 }
-.kepano-home .inline-title,
-.kepano-home .metadata-container { display: none; }
+.markdown-preview-view.kepano-home .inline-title,
+.markdown-preview-view.kepano-home .metadata-container { display: none; }
 .kepano-home h1 {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 2.4em;
@@ -93,10 +95,10 @@
 }
 
 /* Properties may be a sibling of the rendered note in newer Obsidian builds. */
-.workspace-leaf-content[data-type="markdown"]:has(.kepano-home) .metadata-container,
-.workspace-leaf-content[data-type="markdown"]:has(.kepano-home) .metadata-properties-heading,
-.workspace-leaf-content[data-type="markdown"]:has(.kepano-home) .metadata-properties,
-.workspace-leaf-content[data-type="markdown"]:has(.kepano-home) .metadata-add-button { display: none; }
+.workspace-leaf-content[data-type="markdown"][data-mode="preview"]:has(.kepano-home) .metadata-container,
+.workspace-leaf-content[data-type="markdown"][data-mode="preview"]:has(.kepano-home) .metadata-properties-heading,
+.workspace-leaf-content[data-type="markdown"][data-mode="preview"]:has(.kepano-home) .metadata-properties,
+.workspace-leaf-content[data-type="markdown"][data-mode="preview"]:has(.kepano-home) .metadata-add-button { display: none; }
 
 /* Native nested callouts form the selected Plan / Explore split. */
 .kepano-home .callout[data-callout="home"] {
