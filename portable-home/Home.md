@@ -41,4 +41,4 @@ Open a dated page below. The date is the page's date, not a claim that its plan 
 
 ---
 
-Inspired by [Steph Ango's Obsidian vault](https://stephango.com/vault). Original vault © 2023 Steph Ango, MIT licensed. Native home adaptation by Tyrone Ross. [[README|Setup and maintenance]].
+Inspired by [Steph Ango's Obsidian vault](https://stephango.com/vault). Original vault © 2023 Steph Ango, MIT licensed. Native home adaptation by Tyrone Ross. [Setup and maintenance](https://github.com/tyroneross/kepano-obsidian/tree/main/portable-home).
