@@ -46,6 +46,7 @@
   --table-border-color: #45423d;
 }
 .kepano-home .markdown-preview-sizer {
+  container: home-note / inline-size;
   max-width: 980px;
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 36px);
@@ -120,6 +121,13 @@
   padding-bottom: 10px; border-bottom: 1px solid var(--home-rule);
 }
 @media (max-width: 640px) {
+  .kepano-home .callout[data-callout="home"] > .callout-content {
+    grid-template-columns: 1fr; gap: 24px;
+  }
+}
+
+/* Follow the note pane width even when the desktop window stays wide. */
+@container home-note (max-width: 640px) {
   .kepano-home .callout[data-callout="home"] > .callout-content {
     grid-template-columns: 1fr; gap: 24px;
   }
