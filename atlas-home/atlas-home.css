@@ -1,0 +1,111 @@
+/* Atlas-inspired native Home — Tyrone Ross, MIT.
+   Design reference: Atlas by InlitX, copyright (c) 2026 InlitX (MIT).
+   Retains the linked-index approach inspired by Steph Ango (MIT).
+   Scoped to cssclasses: [atlas-home]. System fonts; no network imports. */
+.markdown-preview-view.atlas-home {
+  --file-line-width: 1080px;
+  --atlas-border: var(--background-modifier-border);
+  --atlas-muted: var(--text-muted);
+  --atlas-accent: var(--text-accent);
+  font-family: var(--font-interface), -apple-system, BlinkMacSystemFont, sans-serif;
+  --bases-table-font-size: var(--font-text-size, 15px);
+  font-size: var(--font-text-size, 15px);
+  line-height: 1.55;
+  color: var(--text-normal);
+}
+.markdown-preview-view.atlas-home .markdown-preview-sizer {
+  container: atlas-note / inline-size;
+  max-width: 1080px;
+  padding-inline: clamp(16px, 3vw, 32px);
+  padding-bottom: 48px;
+}
+.markdown-preview-view.atlas-home .inline-title { display: none; }
+.workspace-leaf-content[data-type="markdown"][data-mode="preview"]:has(.atlas-home) .metadata-container { display: none; }
+.atlas-home h1 {
+  font-family: inherit; font-size: 2em; line-height: 1.2;
+  font-weight: 650; letter-spacing: -0.025em; margin: 12px 0 8px;
+}
+.atlas-home h1 + p { color: var(--atlas-muted); margin-block: 0 24px; }
+.atlas-home h2 {
+  font-family: inherit; font-size: 0.8em; font-weight: 650;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  line-height: 1.5; color: var(--atlas-muted); margin: 0 0 12px;
+}
+.atlas-home a { text-underline-offset: 3px; }
+.atlas-home a:focus-visible, .atlas-home button:focus-visible {
+  outline: 2px solid var(--atlas-accent); outline-offset: 3px; border-radius: 4px;
+}
+.atlas-home .callout[data-callout^="atlas-"] {
+  padding: 0; margin-block: 0; background: transparent; border: 0;
+  box-shadow: none; min-width: 0;
+}
+.atlas-home .callout[data-callout^="atlas-"]:not([data-callout="atlas-maintenance"]) > .callout-title { display: none; }
+.atlas-home .callout[data-callout="atlas-links"] { margin-block: 0 28px; }
+.atlas-home .callout[data-callout="atlas-links"] > .callout-content {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px;
+}
+.atlas-home .callout[data-callout="atlas-links"] p { margin: 0; min-width: 0; }
+.atlas-home .callout[data-callout="atlas-links"] a {
+  display: flex; align-items: center; min-height: 48px; height: 100%;
+  border: 1px solid var(--atlas-border); border-radius: 8px;
+  padding: 10px 14px; color: var(--text-normal);
+  font-size: 0.94em; font-weight: 550; text-decoration: none;
+  white-space: normal; overflow-wrap: anywhere;
+}
+.atlas-home .callout[data-callout="atlas-links"] a:hover { background: var(--background-modifier-hover); }
+.atlas-home .callout[data-callout="atlas-columns"] > .callout-content {
+  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 28px; align-items: start;
+}
+.atlas-home .callout[data-callout="atlas-column"] > .callout-content { min-width: 0; }
+.atlas-home .callout[data-callout="atlas-column"] h2:not(:first-child) { margin-top: 28px; }
+.atlas-home .callout[data-callout="atlas-column"] p { color: var(--atlas-muted); margin: 0 0 12px; }
+.atlas-home .bases-embed {
+  border: 1px solid var(--atlas-border); border-radius: 8px;
+  background: var(--background-primary); min-width: 0; max-width: 100%;
+}
+.atlas-home .bases-header { font-size: 0.8em; }
+.atlas-home .bases-list-item {
+  min-width: 0; width: calc(100% - 24px); margin-inline-start: 12px;
+  padding-inline-start: 0; padding-block: 4px; border-bottom: 1px solid var(--atlas-border);
+}
+.atlas-home .bases-list-item .list-bullet { display: none; }
+.atlas-home .bases-list-item .internal-link {
+  display: inline-flex; align-items: center; min-height: 44px;
+  max-width: 100%; white-space: normal; overflow-wrap: anywhere;
+  color: var(--text-normal); line-height: 1.45; text-decoration: none;
+}
+.atlas-home .bases-list-item .internal-link:hover { color: var(--atlas-accent); text-decoration: underline; }
+.atlas-home .callout[data-callout="atlas-column"] ul { margin: 0; padding: 0; list-style: none; }
+.atlas-home .callout[data-callout="atlas-column"] ul a {
+  display: flex; align-items: center; min-height: 44px;
+  border-bottom: 1px solid var(--atlas-border); text-decoration: none;
+  color: var(--text-normal); overflow-wrap: anywhere;
+}
+.atlas-home .callout[data-callout="atlas-column"] ul a:hover { color: var(--atlas-accent); }
+.atlas-home hr { border-color: var(--atlas-border); margin-block: 32px 16px; }
+.atlas-home hr + p { color: var(--atlas-muted); font-size: 0.8em; }
+.atlas-home .callout[data-callout="atlas-maintenance"] { margin-top: 12px; }
+/* A split pane must reflow even when the desktop window remains wide. */
+@container atlas-note (max-width: 800px) {
+  .atlas-home .callout[data-callout="atlas-columns"] > .callout-content { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+@container atlas-note (max-width: 540px) {
+  .atlas-home .callout[data-callout="atlas-links"] > .callout-content { grid-template-columns: repeat(auto-fit, minmax(min(100%, max(calc((100% - 10px) / 2), 9.5em)), 1fr)); }
+  .atlas-home h1 { font-size: 1.8em; }
+}
+@media (max-width: 600px) {
+  .markdown-preview-view.atlas-home .markdown-preview-sizer { padding-inline: 0; padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
+  .atlas-home .callout[data-callout="atlas-columns"] > .callout-content { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .atlas-home .callout[data-callout="atlas-links"] > .callout-content { grid-template-columns: repeat(auto-fit, minmax(min(100%, max(calc((100% - 10px) / 2), 9.5em)), 1fr)); }
+}
+
+.atlas-home .callout[data-callout="atlas-maintenance"] > .callout-title { min-height: 44px; align-items: center; color: var(--atlas-muted); font-size: 0.85em; }
+
+.atlas-home .callout[data-callout="atlas-column"] ul .list-bullet { display: none; }
+.atlas-home .callout[data-callout="atlas-column"] ul li { padding: 0; margin: 0; }
+
+.atlas-home .bases-list-item:last-child { border-bottom: 0; }
+
+.atlas-home .atlas-subtitle { color: var(--atlas-muted); }
+.atlas-home .atlas-credit { display: block; color: var(--atlas-muted); font-size: 0.8em; line-height: 1.5; }
